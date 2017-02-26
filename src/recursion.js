@@ -23,21 +23,87 @@ var factorial = function(n) {
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+	//terminal case - if array length is 0
+	if (array.length === 0) {
+		return 0; 
+	} 
+
+	return array[0] + sum(array.slice(1));
+
+	// *** original version - popping off and adding to int ***
+	// else {
+	// 	var nArr = array.slice();
+	// 	var int = nArr.pop()
+	// 	var n = nArr.length; //6
+	// }
+
+	// //base case - return last value that remains 
+	// if (n === 0) {
+	// 	return int; 
+	// }
+	// //recursive case - array is one less every time
+	// return int + sum(nArr); //array.length = 5
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+	//use reduce to flatten 
+	var nArr = array.slice(); 
+	var flatArr = nArr.reduce(function (a,b) {
+		return a.concat(b);
+	}, []);
+
+	//base case
+	if (flatArr.length === 0) {
+		return 0;
+	} 
+	//recursive case 
+	//+ changes string to a number
+	return +flatArr[0] + arraySum(flatArr.slice(1));
 };
 
 // 4. Check if a number is even.
-var isEven = function(n) {
+var isEven = function (num) {
+	if (num === 0) {
+		return true;
+	} else if (num === 1) {
+		return false;
+	} else {
+		return isEven(Math.abs(num) - 2);
+	}
 };
 
+//*** Original Attempt ***
+// var counter = 2; // added counter outside of function
+
+// var isEven = function(num) {  
+//   //base case 
+// 	if (num === counter || num === 0) {
+// 	  return true;
+// 	} else if (Math.floor(num/2) !== (num/2)) {
+// 	  return false;
+// 	 //recursive case 
+// 	} else {
+// 	  counter = Math.floor(num/2);
+// 	  return isEven(num/2);
+// 	}        
+// };
+
 // 5. Sum all integers below a given integer.
-// sumBelow(10); // 45
+// sumBelow(10); // 45 //excluding int
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+	//base case
+	if (n === 0) {
+		return 0;
+	}
+	//recursive case
+	if (n > 0) {
+		return (n-1) + sumBelow(n-1);	
+	} else if (n < 0) {
+		return -(Math.abs(n) - 1) - (sumBelow(Math.abs(n) - 1));
+	}
 };
 
 // 6. Get the integers within a range (x, y).
