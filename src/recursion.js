@@ -206,16 +206,71 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
+	if (x === 0 && y === 0) {
+		return NaN;
+	}	
+
+	if ((x-y) === y || (y-x) === x) {
+		return 0;
+	}
+
+	if (y>x && x >= 0){
+		return x;
+	}
+
+	if (x>y && ((x-y) <= y)) {
+		return (x-y);
+	}
+
+	if (x < 0 && y < 0) {
+		if (x<y) {
+			return (x-(y));
+		}
+
+		if (x>y) {
+			return x;
+		}
+	}
+
+	if (x < 0 && y > 0) {
+		return modulo((x+y),y);
+	}
+
+	if (x>y) {
+		return modulo((x-y),y);
+	}
 };
 
 // 12. Write a function that multiplies two numbers without using the * operator or
 // Math methods.
+
 var multiply = function(x, y) {
+	if (x === 0 || y === 0) {
+		return 0;
+	}
+
+	if (y > 0 && x > 0 || x < 0 && y > 0) {
+		return x + multiply(x, y-1);	
+	} 
+
+	if (y < 0 && x < 0) {
+		return -x + multiply(-x, (-y) - 1);
+	}
+	
+	if (y < 0 && x > 0) {
+		return y + multiply(x - 1, y);
+	}
 };
+
 
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods.
 var divide = function(x, y) {
+	// if (x-y < 0) {
+	// 	return -x - y;
+	// }
+
+	// return divide(x-y, y);
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -231,6 +286,26 @@ var gcd = function(x, y) {
 // compareStr('house', 'houses') // false
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+	//terminal
+	// if (str1.length !== str2.length) {
+	// 	return false;
+	// }
+
+	if (!str1.length || !str2.length) {
+		return true;
+	}
+  
+	//base
+	if (str1[0] !== str2[0]) {
+		return false;
+	}
+
+	if (str1.length === 1 && str1[0] === str2[0]) {
+		return true; 
+	}
+
+	//recursive 
+	return compareStr(str1.slice(1), str2.slice(1));
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
